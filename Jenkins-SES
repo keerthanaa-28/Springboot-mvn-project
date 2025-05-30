@@ -62,6 +62,21 @@ pipeline {
     }
 
     post {
+        success {
+            mail to: 'arumugamkeerthana28@gmail.com',
+                 subject: 'Pipeline Success',
+                 body: 'Pipeline executed successfully!',
+                 from: 'arumugamkeerthana28@gmail.com'
+        }
+
+        failure {
+            mail to: 'arumugamkeerthana28@gmail.com',
+                 subject: 'Pipeline Failure',
+                 body: 'Pipeline execution failed!',
+                 from: 'arumugamkeerthana28@gmail.com'
+        }
+    }
+}
 
 
 
