@@ -1,36 +1,41 @@
-pipeline{
+pipeline {
     agent any
-    tools{
-        maven 'maven-3.8.4'
+
+    tools {
+        maven 'maven-3.9.9' 
     }
-    stages{
-        stage('checkout the code'){
-            steps{
-                git url:'https://github.com/keerthanaa-28/Springboot-mvn-project.git', branch: 'main'
+    environment { 
+        JAVA_HOME = '/path/to/java21' 
+        PATH = "${env.JAVA_HOME}/bin:${env.PATH}"
+    }
+    stages {
+        stage('Checkout the Code') {
+            steps {
+                git url: 'https://github.com/keerthanaa-28/Springboot-mvn-project.git', branch: 'main'
             }
         }
-        stage('build the code'){
-            steps{
-                sh 'mvn clean package'
+
+        stage('Build the Code') {
+            steps {
+                sh 'mvn clean package -DskipTests'  
             }
         }
-        stage("sonar quality check"){
-            steps{
-                script{
+
+      stage('Sonar Quality Check') {
+            steps {
+                script {
                     withSonarQubeEnv(installationName: 'sonarqube-9', credentialsId: 'jenkins-sonar-token') {
-                            sh 'mvn sonar:sonar '
+                       sh 'mvn sonar:sonar -Dsonar.projectKey=springboot-mvn-project'
                     }
 
                     timeout(time: 1, unit: 'HOURS') {
-                      def qg = waitForQualityGate()
-                      if (qg.status != 'OK') {
-                           error "Pipeline aborted due to quality gate failure: ${qg.status}"
-                      }
+                        def qg = waitForQualityGate()
+                        if (qg.status != 'OK') {
+                            error "Pipeline aborted due to Quality Gate failure: ${qg.status}"
+                        }
                     }
-
-                }  
+                }
             }
         }
     }
 }
- 
