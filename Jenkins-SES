@@ -9,7 +9,7 @@ pipeline {
         JAVA_HOME = '/usr/lib/jvm/java-21-openjdk-amd64'  
         PATH = "${env.JAVA_HOME}/bin:${env.PATH}"
         registry = '137827796096.dkr.ecr.us-east-1.amazonaws.com/myrepo'
-        registryCredential = 'jenkins-ecr-iam'
+        registryCredential = 'jenkins-iam-ecr'
         dockerImage = ''
     }
 
@@ -29,7 +29,7 @@ pipeline {
         stage('Sonar Quality Check') {
             steps {
                 script {
-                    withSonarQubeEnv(installationName: 'sonarqube-9', credentialsId: 'jenkins-sonar-token') {
+                    withSonarQubeEnv(installationName: 'Sonarqube-9', credentialsId: 'Jenkins-sonar-token') {
                         sh 'mvn sonar:sonar -Dsonar.projectKey=springboot-mvn-project'
                     }
 
