@@ -8,8 +8,8 @@ pipeline {
     environment {
         JAVA_HOME = '/usr/lib/jvm/java-21-openjdk-amd64'  
         PATH = "${env.JAVA_HOME}/bin:${env.PATH}"
-        registry = '137827796096.dkr.ecr.us-east-1.amazonaws.com/myrepo'
-        registryCredential = 'jenkins-ecr-iam'
+        registry = '476114111535.dkr.ecr.us-east-1.amazonaws.com/myrepo'
+        registryCredential = 'jenkins-iam-ecr'
         dockerImage = ''
     }
 
