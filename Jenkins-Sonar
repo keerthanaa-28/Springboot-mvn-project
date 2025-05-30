@@ -6,7 +6,7 @@ pipeline{
     stages{
         stage('checkout the code'){
             steps{
-                git url:'https://github.com/keerthanaa-28/Springboot-mvn-project.git', branch: 'master'
+                git url:'https://github.com/keerthanaa-28/Springboot-mvn-project.git', branch: 'main'
             }
         }
         stage('build the code'){
